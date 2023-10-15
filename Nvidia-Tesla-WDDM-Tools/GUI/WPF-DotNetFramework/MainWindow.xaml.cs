@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System;
 using MessageBox = HandyControl.Controls.MessageBox;
 using System.Windows.Input;
+using System.Reflection;
 
 namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
 {
@@ -96,7 +97,7 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
 
         #region GPU
 
-        private bool refreshed=false;
+        private static bool _refreshed = false;
 
         private void RefreshList()
         {
@@ -122,6 +123,7 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
                 }
             }
 
+            _refreshed = true;
             ListBoxDevices.Focus();
         }
 
@@ -129,12 +131,12 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
         {
             if (ListBoxDevices.Items.Count == 0)
             {
-                if (refreshed)
+                if (_refreshed)
                 {
                     MessageBox.Show
                     (
-                        "您已经执行过刷新操作，但是好像您没有任何设备！",
-                        "错误",
+                        "You've done a refresh operation, but it looks like you don't have any devices!",
+                        "Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error
                     );
@@ -143,8 +145,9 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
                 {
                     MessageBox.Show
                     (
-                        "您还没有执行过刷新操作！\n将执行刷新，并处理程序自动选择的项目！",
-                        "温馨提醒",
+                        "You haven't performed a refresh operation yet!\n" +
+                        "A refresh is performed and the program automatically selects the items!",
+                        "Notify",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information
                     );
@@ -159,35 +162,32 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
             {
                 MessageBox.Show
                 (
-                    "您还没有选中任何项目！",
-                    "温馨提醒",
+                    "You haven't selected any items!",
+                    "Notify",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information
                 );
                 return;
             }
+
+            var result = MessageBox.Show
+            (
+                $"Processing of the selected {selectedItemsCount}devices is about to begin.",
+                "Notify",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Warning
+            );
+
+            if (result == MessageBoxResult.OK)
+            {
+                Debug.WriteLine("User confirm.");
+            }
             else
             {
-
-                MessageBoxResult result = MessageBox.Show
-                (
-                    $"即将开始处理选中的{selectedItemsCount}个设备",
-                    "温馨提醒",
-                    MessageBoxButton.OKCancel,
-                    MessageBoxImage.Warning
-                );
-
-                if (result == MessageBoxResult.OK)
-                {
-                    Debug.WriteLine("用户确定执行！");
-                }
-                else
-                {
-                    Debug.WriteLine("取消执行！");
-                    return;
-                }
-
+                Debug.WriteLine("User cancel.");
+                return;
             }
+
 
             var gpuList = new List<string>();
 
@@ -197,11 +197,10 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
                 var gpuName = listBoxItem.Content.ToString();
 
                 Debug.WriteLine($"GpuId:{gpuId} GpuName:{gpuName}");
-                //string selectedValue = listBoxItem.ToString();
                 gpuList.Add(gpuId);
             }
 
-            //ToolsClass.ModifyGpuReg(gpuList);
+            ToolsClass.ModifyGpuReg(gpuList);
         }
 
         #endregion
@@ -224,12 +223,31 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
 
         private void MenuItemGithubRepository_Click(object sender, RoutedEventArgs e)
         {
-
+            if (!Utils.OpenUrl(@"https://github.com/a645162/Nvidia-Tesla-WDDM-Tools"))
+            {
+                MessageBox.Show
+                (
+                    "The webpage cannot be successfully opened using the default browser!",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
 
         private void MenuItemAboutProgram_Click(object sender, RoutedEventArgs e)
         {
+            string version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
 
+            Debug.WriteLine("Version:" + version);
+
+            MessageBox.Show
+            (
+                $"NVIDIA Tesla WDDM Tools\nVersion:{version}",
+                "About",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
         }
 
         #endregion
