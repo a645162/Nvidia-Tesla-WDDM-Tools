@@ -11,7 +11,7 @@ namespace SharedProject1
         private const string GpuListRegPath =
             @"SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}";
 
-        public static List<(string, string)> ReadGpuList()
+        public static List<(string, string)>? ReadGpuList()
         {
             var hkeyLocalMachine = Registry.LocalMachine;
             var hkeyGpuList =
@@ -23,7 +23,7 @@ namespace SharedProject1
 
             if (hkeyGpuList == null)
             {
-                // 如果系统直接没有这个键，那后续就不需要任何操作了！
+                // If the system does not have this key directly, then no subsequent operation is required!
                 return null;
             }
 
@@ -43,7 +43,7 @@ namespace SharedProject1
                 var hkeyGpu = hkeyGpuList.OpenSubKey(subNameStr);
                 // 打不开这个键就直接忽略
                 if (hkeyGpu == null) continue;
-                var gpuNameStr = (string)hkeyGpu.GetValue("DriverDesc");
+                var gpuNameStr = (string?)hkeyGpu.GetValue("DriverDesc");
                 if (gpuNameStr != null)
                 {
                     gpuNameList.Add((subNameStr, gpuNameStr));
@@ -70,7 +70,7 @@ namespace SharedProject1
 
             if (hkeyGpuList == null)
             {
-                // 如果系统直接没有这个键，那后续就不需要任何操作了！
+                // If the system does not have this key directly, then no subsequent operation is required!
                 return;
             }
 
@@ -79,21 +79,19 @@ namespace SharedProject1
                 if (gpuId.Length == 4)
                 {
                     var gpuSubKey = hkeyGpuList.OpenSubKey(gpuId, true);
-                    if (gpuSubKey != null)
+                    if (gpuSubKey == null) continue;
+                    var gpuName = (string?)gpuSubKey.GetValue("DriverDesc");
+                    if (gpuName != null)
                     {
-                        var gpuName = (string)gpuSubKey.GetValue("DriverDesc");
-                        if (gpuName != null)
-                        {
-                            Debug.WriteLine("\n即将开始处理：" + gpuName);
-                            ModifyGpuRegByRegKey(gpuSubKey);
-                        }
-
-                        gpuSubKey.Close();
+                        Debug.WriteLine("\nComing soon:" + gpuName);
+                        ModifyGpuRegByRegKey(gpuSubKey);
                     }
+
+                    gpuSubKey.Close();
                 }
                 else
                 {
-                    Debug.WriteLine(gpuId+" 输入非法！");
+                    Debug.WriteLine(gpuId + " Illegal input!");
                 }
             }
 
@@ -102,33 +100,50 @@ namespace SharedProject1
         }
 
         // 返回值说明：1=成功 0=已经转换，无需转换 -1=失败
-        public static int ModifyGpuRegByRegKey(RegistryKey gpuRegKey)
+        private static int ModifyGpuRegByRegKey(RegistryKey gpuRegKey)
         {
             //Console.WriteLine((uint)(int)gpuRegKey.GetValue("AdapterType"));
-            if (
-                (uint)(int)gpuRegKey.GetValue("AdapterType") != 1
-                && (uint)(int)gpuRegKey.GetValue("FeatureScore") != 209
+            try
+            {
+                var intAdapterType = (int?)gpuRegKey.GetValue("AdapterType");
+                var intFeatureScore = (int?)gpuRegKey.GetValue("FeatureScore");
+
+                if (
+                    (intAdapterType ?? -1) == -1
+                    || (intFeatureScore ?? -1) == -1
                 )
-            {
-                Debug.WriteLine("即将转换为WDDM模式！");
-                gpuRegKey.SetValue("AdapterType", 1, RegistryValueKind.DWord);
-                gpuRegKey.SetValue("FeatureScore", 209, RegistryValueKind.DWord);
-                gpuRegKey.SetValue("GridLicensedFeatures", 7, RegistryValueKind.DWord);
-                gpuRegKey.SetValue("EnableMsHybrid", 1, RegistryValueKind.DWord);
-                return 1;
-            }
-            else
-            {
-                Debug.WriteLine("貌似不可以转换！");
-                Debug.WriteLine((int)gpuRegKey.GetValue("AdapterType"));
-                Debug.WriteLine((int)gpuRegKey.GetValue("FeatureScore"));
-                if ((int)gpuRegKey.GetValue("FeatureScore") == 209)
                 {
-                    Debug.WriteLine("貌似已经工作在WDDM模式下了！");
+                    Debug.WriteLine("It seems that it cannot be converted!");
+                    return -1;
+                }
+                else
+                {
+                    if (
+                        (intAdapterType ?? 0) != 1
+                        || (intFeatureScore ?? 0) != 209
+                    )
+                    {
+                        Debug.WriteLine("Converting to WDDM mode is about to be converted!");
+                        gpuRegKey.SetValue("AdapterType", 1, RegistryValueKind.DWord);
+                        gpuRegKey.SetValue("FeatureScore", 209, RegistryValueKind.DWord);
+                        gpuRegKey.SetValue("GridLicensedFeatures", 7, RegistryValueKind.DWord);
+                        gpuRegKey.SetValue("EnableMsHybrid", 1, RegistryValueKind.DWord);
+                        Debug.WriteLine("Ok!");
+                        return 1;
+                    }
+
+                    Debug.WriteLine((intAdapterType ?? -1));
+                    Debug.WriteLine((intFeatureScore ?? -1));
+                    if ((intFeatureScore ?? 0) != 209) return -1;
+                    Debug.WriteLine("Looks like it's already working in WDDM mode!");
                     return 0;
                 }
+            }
+            catch
+            {
                 return -1;
             }
+
         }
 
 

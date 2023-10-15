@@ -105,6 +105,11 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
 
             var gpuList = ToolsClass.ReadGpuList();
 
+            if (gpuList == null)
+            {
+                return;
+            }
+
             foreach (var gpuItem in gpuList)
             {
                 Debug.WriteLine(gpuItem.Item1 + " " + gpuItem.Item2);
@@ -135,7 +140,8 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
                 {
                     MessageBox.Show
                     (
-                        "You've done a refresh operation, but it looks like you don't have any devices!",
+                        "You've done a refresh operation," +
+                        " but it looks like you don't have any devices!",
                         "Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error
@@ -172,7 +178,7 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
 
             var result = MessageBox.Show
             (
-                $"Processing of the selected {selectedItemsCount}devices is about to begin.",
+                $"Processing of the selected {selectedItemsCount} devices is about to begin.",
                 "Notify",
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Warning
@@ -243,7 +249,9 @@ namespace NVIDIA_Tesla_WDDM_Tools_WPF_DotNetFramework
 
             MessageBox.Show
             (
-                $"NVIDIA Tesla WDDM Tools\nVersion:{version}",
+                "NVIDIA Tesla WDDM Tools\n" +
+                $"Program Version:{version}\n" +
+                @"https://github.com/a645162/Nvidia-Tesla-WDDM-Tools",
                 "About",
                 MessageBoxButton.OK,
                 MessageBoxImage.Information
