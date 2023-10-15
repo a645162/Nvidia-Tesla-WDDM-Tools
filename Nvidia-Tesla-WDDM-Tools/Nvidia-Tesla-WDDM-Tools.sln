@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{926C4735-55BA-4CDF-81B7-41C332AF5AC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{AFA5240B-87D2-499D-AEEA-A7AEE7618625}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{37C161FB-6388-46B2-950C-C859A7ECD226}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject1", "Library\SharedProject1\SharedProject1.shproj", "{14B360B8-6DF5-4081-A7F8-F601432277E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI-DotNetCore", "CLI\CLI-DotNetCore\CLI-DotNetCore.csproj", "{19FBDA93-6C30-4C9A-95F5-974663AE4130}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF-DotNetCore", "GUI\WPF-DotNetCore\WPF-DotNetCore.csproj", "{A4654C50-B088-4255-8199-8DF95E5492A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF-DotNetFramework", "GUI\WPF-DotNetFramework\WPF-DotNetFramework.csproj", "{1290374C-7C9D-4199-8B9D-4936206F80F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19FBDA93-6C30-4C9A-95F5-974663AE4130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19FBDA93-6C30-4C9A-95F5-974663AE4130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19FBDA93-6C30-4C9A-95F5-974663AE4130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19FBDA93-6C30-4C9A-95F5-974663AE4130}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4654C50-B088-4255-8199-8DF95E5492A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4654C50-B088-4255-8199-8DF95E5492A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4654C50-B088-4255-8199-8DF95E5492A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4654C50-B088-4255-8199-8DF95E5492A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1290374C-7C9D-4199-8B9D-4936206F80F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1290374C-7C9D-4199-8B9D-4936206F80F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1290374C-7C9D-4199-8B9D-4936206F80F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1290374C-7C9D-4199-8B9D-4936206F80F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{14B360B8-6DF5-4081-A7F8-F601432277E4} = {926C4735-55BA-4CDF-81B7-41C332AF5AC6}
+		{19FBDA93-6C30-4C9A-95F5-974663AE4130} = {37C161FB-6388-46B2-950C-C859A7ECD226}
+		{A4654C50-B088-4255-8199-8DF95E5492A3} = {AFA5240B-87D2-499D-AEEA-A7AEE7618625}
+		{1290374C-7C9D-4199-8B9D-4936206F80F0} = {AFA5240B-87D2-499D-AEEA-A7AEE7618625}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F67776E1-3593-47A2-86B5-66A20D0420AB}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Library\SharedProject1\NVIDIATeslaWDDMToolsSharedProject.projitems*{1290374c-7c9d-4199-8b9d-4936206f80f0}*SharedItemsImports = 4
+		Library\SharedProject1\NVIDIATeslaWDDMToolsSharedProject.projitems*{14b360b8-6df5-4081-a7f8-f601432277e4}*SharedItemsImports = 13
+		Library\SharedProject1\NVIDIATeslaWDDMToolsSharedProject.projitems*{a4654c50-b088-4255-8199-8df95e5492a3}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
