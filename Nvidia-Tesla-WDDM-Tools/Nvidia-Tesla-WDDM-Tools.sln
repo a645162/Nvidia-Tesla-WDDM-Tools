@@ -51,5 +51,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Library\SharedProject1\NVIDIATeslaWDDMToolsSharedProject.projitems*{1290374c-7c9d-4199-8b9d-4936206f80f0}*SharedItemsImports = 4
 		Library\SharedProject1\NVIDIATeslaWDDMToolsSharedProject.projitems*{14b360b8-6df5-4081-a7f8-f601432277e4}*SharedItemsImports = 13
+		Library\SharedProject1\NVIDIATeslaWDDMToolsSharedProject.projitems*{a4654c50-b088-4255-8199-8df95e5492a3}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

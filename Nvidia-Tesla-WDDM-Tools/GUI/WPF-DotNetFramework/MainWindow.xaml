@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
+    Title="NVIDIA Tesla WDDM Tools"
     Width="800"
     Height="450"
     ShowTitle="True"
@@ -17,15 +17,17 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Height="29">
+            <StackPanel Height="24">
                 <Menu HorizontalAlignment="Left">
-                    <MenuItem Header="Header1">
-                        <MenuItem Header="Header1"/>
-                        <MenuItem Header="Header2"/>
+                    <MenuItem Header="程序">
+                        <MenuItem Header="刷新"/>
+                        <MenuItem Header="修改"/>
+                        <MenuItem Header="退出程序"/>
                     </MenuItem>
-                    <MenuItem Header="Header2">
-                        <MenuItem Header="Header1"/>
-                        <MenuItem Header="Header2"/>
+                    <MenuItem Header="关于">
+                        <MenuItem Header="帮助"/>
+                        <MenuItem Header="Github 仓库"/>
+                        <MenuItem Header="关于"/>
                     </MenuItem>
                 </Menu>
             </StackPanel>
@@ -148,6 +150,16 @@
         </Grid>
     </hc:Window.NonClientAreaContent>
     <Grid>
-        <Button x:Name="btn_refresh" Content="Refresh" HorizontalAlignment="Left" Height="48" Margin="498,249,0,0" VerticalAlignment="Top" Width="140" Click="btn_refresh_Click"/>
+
+        <Grid Margin="50">
+
+            <ListBox x:Name="ListBoxDevices" Margin="10" SelectionMode="Multiple"/>
+
+        </Grid>
+        <Grid>
+            <Button x:Name="BtnRefresh" Content="Refresh" HorizontalAlignment="Left" Height="48" Margin="233,385,0,0" VerticalAlignment="Top" Width="140" Click="BtnRefresh_Click"/>
+            <Button x:Name="BtnModify" Content="Modify" HorizontalAlignment="Left" Height="48" Margin="421,385,0,0" VerticalAlignment="Top" Width="140" Click="BtnModify_Click"/>
+        </Grid>
+            
     </Grid>
 </hc:Window>

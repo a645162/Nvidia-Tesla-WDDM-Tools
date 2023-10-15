@@ -6,7 +6,7 @@
     <SharedGUID>14b360b8-6df5-4081-a7f8-f601432277e4</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>NVIDIATeslaWDDMToolsSharedProject</Import_RootNamespace>
+    <Import_RootNamespace>SharedProject1</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ToolsClass.cs" />
